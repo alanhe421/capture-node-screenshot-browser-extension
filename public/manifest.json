@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
 
-  "name": "Chrome Extension TypeScript Starter",
+  "name": "Capture Node Screenshot",
   "description": "Chrome Extension, TypeScript, Visual Studio Code",
   "version": "1.0",
 
