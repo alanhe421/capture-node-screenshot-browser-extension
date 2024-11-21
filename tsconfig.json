@@ -11,6 +11,7 @@
         "noEmitOnError": true,
         "jsx": "react",
         "typeRoots": [ "node_modules/@types" ],
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "noEmit": false
     }
 }
