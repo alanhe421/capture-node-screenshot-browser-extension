@@ -1,4 +1,4 @@
-function injectScript(file, node) {
+function injectScript(file: string, node: string) {
   const th = document.getElementsByTagName(node)[0];
   const s = document.createElement('script');
   s.setAttribute('type', 'text/javascript');

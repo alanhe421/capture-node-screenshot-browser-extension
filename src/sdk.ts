@@ -1,61 +1,26 @@
-(function () {
-  let isAltPressed = false;
-  let hoverElement = null;
+import html2canvas from 'html2canvas';
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Alt') {
-      isAltPressed = true;
+// 示例函数：捕获指定元素的截图并发送回内容脚本
+export async function captureElement(element: HTMLElement): Promise<string> {
+    try {
+        const canvas = await html2canvas(element);
+        return canvas.toDataURL('image/png');
+    } catch (error) {
+        console.error('截图失败:', error);
+        throw error;
     }
-  };
+}
 
-  const handleKeyUp = (event) => {
-    if (event.key === 'Alt') {
-      isAltPressed = false;
+// 监听来自页面的消息
+window.addEventListener('message', async (event) => {
+    if (event.source !== window) return; // 只处理来自同一页面的消息
+    if (event.data.type === 'CAPTURE_NODE') {
+        const { elementId } = event.data;
+        const targetElement = document.getElementById(elementId);
+        if (targetElement) {
+            const imageData = await captureElement(targetElement);
+            // 将截图发送回内容脚本
+            window.postMessage({ type: 'CAPTURED_IMAGE', imageData }, '*');
+        }
     }
-  };
-
-  // 监听鼠标点击事件
-  const handleClick = (event) => {
-    if (isAltPressed && event.button === 0) { // 按下 Option 键并左键点击
-      event.preventDefault();
-      const targetElement = event.target;
-      if (targetElement) {
-        console.log('targetElement:', targetElement);
-        triggerScreenshot();
-      }
-    }
-  };
-
-
-  const triggerScreenshot = () => {
-    chrome.runtime.sendMessage({
-      type: 'OPEN_DEBUGGER',
-    });
-  };
-
-  // 监听鼠标移动事件，添加样式到聚焦元素
-  const handleMouseMove = (event) => {
-    if (hoverElement) {
-      hoverElement.style.outline = '';
-      hoverElement = null;
-    }
-
-    if (isAltPressed && event.target instanceof HTMLElement) {
-      hoverElement = event.target;
-      hoverElement.style.outline = '2px solid rgba(0, 128, 255, 0.7)'; // 添加样式，但不改变宽高
-    }
-  };
-
-  // 添加事件监听器
-  document.addEventListener('keydown', handleKeyDown);
-  document.addEventListener('keyup', handleKeyUp);
-  document.addEventListener('click', handleClick);
-  document.addEventListener('mousemove', handleMouseMove);
-
-
-  window.addEventListener('unload', () => {
-    document.removeEventListener('keydown', handleKeyDown);
-    document.removeEventListener('keyup', handleKeyUp);
-    document.removeEventListener('click', handleClick);
-  });
-})();
+});
