@@ -26,7 +26,7 @@
           const url = canvas.toDataURL('image/png');
           const a = document.createElement('a');
           a.href = url;
-          a.download = 'screenshot.png';
+          a.download = `${location.hostname}_screenshot.png`;
           a.click();
         });
       }
