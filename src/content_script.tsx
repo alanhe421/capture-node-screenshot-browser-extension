@@ -7,3 +7,5 @@ function injectScript(file: string, node: string) {
 }
 
 injectScript(chrome.runtime.getURL('js/sdk.js'), 'body');
+injectScript(chrome.runtime.getURL('js/html2canvas.min.js'), 'body');
+

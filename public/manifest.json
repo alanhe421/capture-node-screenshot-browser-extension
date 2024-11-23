@@ -25,11 +25,6 @@
     "service_worker": "js/background.js"
   },
   "permissions": [
-    "storage",
-    "activeTab",
-    "tabs",
-    "scripting",
-    "debugger"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -37,7 +32,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "js/sdk.js"
+        "js/sdk.js",
+        "js/html2canvas.min.js"
       ],
       "matches": [
         "<all_urls>"

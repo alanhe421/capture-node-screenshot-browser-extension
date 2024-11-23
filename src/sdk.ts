@@ -1,5 +1,3 @@
-import html2canvas from 'html2canvas';
-
 (function () {
   let isAltPressed = false;
   let hoverElement = null;
@@ -23,6 +21,7 @@ import html2canvas from 'html2canvas';
       const targetElement = event.target;
       if (targetElement) {
         console.log('targetElement:', targetElement);
+        // @ts-ignore
         html2canvas(targetElement).then((canvas) => {
           const url = canvas.toDataURL('image/png');
           const a = document.createElement('a');
