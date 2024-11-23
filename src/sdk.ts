@@ -43,7 +43,7 @@
 
     if (isAltPressed && event.target instanceof HTMLElement) {
       hoverElement = event.target;
-      hoverElement.style.outline = '2px solid rgba(0, 128, 255, 0.7)'; // 添加样式，但不改变宽高
+      hoverElement.style.outline = 'auto 1px RGBA(2,133,255,1)';
     }
   };
 
